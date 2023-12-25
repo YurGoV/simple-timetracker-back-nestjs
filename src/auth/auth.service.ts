@@ -54,6 +54,22 @@ export class AuthService {
     return user;
   }
 
+  async deleteToken(email: string) {
+    const user = await this.userModel.findOneAndUpdate(
+      { email },
+      {
+        token: '',
+      },
+      { new: true },
+    );
+    if (!user || (user && user.token)) {
+      throw new HttpException(
+        'logout service error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   async createJWT(email: string) {
     const payload = { email };
     const token: string = await this.jwtService.signAsync(payload);

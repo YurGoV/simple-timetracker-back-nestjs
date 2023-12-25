@@ -63,4 +63,13 @@ export class AuthController {
 
     return user;
   }
+
+  @HttpCode(204)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async logout(@Req() request: any) {
+    const { email } = request.user;
+    await this.authService.deleteToken(email);
+  }
 }
