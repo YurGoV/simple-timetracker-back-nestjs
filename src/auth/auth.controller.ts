@@ -1,36 +1,66 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
-import { AuthDto } from './dto/auth.dto';
-// import { ApiBody, ApiParam } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { GoogleAuthDto } from './dto/google.auth.dto';
 import { AuthService } from './auth.service';
-// import { User, UserDocument } from './auth.model/user.model';
-// import { InjectModel } from '@nestjs/mongoose';
-// import { Model } from 'mongoose';
-import { CreateUserDto } from './dto/create.user.dto';
+import { GoogleUserDto } from './dto/google.user.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt.guard';
+import { UserDto } from './dto/user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    // @InjectModel(User.name) private testModel: Model<UserDocument>,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @HttpCode(200)
+  @UsePipes(new ValidationPipe())
   @Post('login')
-  async login(@Body() { credential }: AuthDto) {
-    // async getGoogleUser(@Body() dto: AuthDto) {
-    // const { credential } = dto;
-    // console.log(credential);
-    const googleUser: CreateUserDto = await this.authService.getGoogleUser({
+  async login(@Body() { credential }: GoogleAuthDto) {
+    const googleUser: GoogleUserDto = await this.authService.getGoogleUser({
       credential,
     });
-    const dbUser = await this.authService.getDbUserByEmail(googleUser.email);
-
-    if (!dbUser) {
-      const user = await this.authService.createUser(googleUser);
+    const dbUser: UserDto | null = await this.authService.getDbUserByEmail(
+      googleUser.email,
+    );
+    if (dbUser && !dbUser.token) {
+      const { email } = dbUser;
+      const token = await this.authService.createJWT(email);
+      const user = await this.authService.updateToken(email, token);
       return user;
     }
+
+    if (!dbUser) {
+      const { email } = googleUser;
+      const token = await this.authService.createJWT(email);
+      const user = await this.authService.createUser(googleUser, token);
+      return user;
+    }
+
+    return dbUser;
   }
 
+  @HttpCode(200)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('current')
-  async current() {}
+  async current(@Req() request: any) {
+    const email = request.user?.email;
+    const user: UserDto | null = await this.authService.getDbUserByEmail(email);
+
+    if (!user) {
+      throw new HttpException('помилка авторизації', HttpStatus.UNAUTHORIZED);
+    }
+
+    return user;
+  }
 }
