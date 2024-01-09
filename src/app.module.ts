@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConfig } from './configs/mongo.config';
 import { RecordsModule } from './records/records.module';
+import { ContextsModule } from './contexts/contexts.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RecordsModule } from './records/records.module';
     ConfigModule.forRoot(),
     AuthModule,
     RecordsModule,
+    ContextsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

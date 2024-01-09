@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Record, RecordDocument } from './record.model/record.model';
-import { Model } from 'mongoose';
+import { Record, RecordDocument } from './record.models/record.model';
+import { Model, Schema as mongooseSchema } from 'mongoose';
 import { CreateRecordDto, RecordDto } from './dto/record.dto';
 
 @Injectable()
@@ -18,7 +18,11 @@ export class RecordsService {
     return createdRecord;
   }
 
-  async getRecords() {}
+  async getAllRecords(userId: mongooseSchema.Types.ObjectId) {
+    const allRecords = await this.recordModel.find({ userId });
+
+    return allRecords;
+  }
 
   async getRecordByIs() {}
 }
