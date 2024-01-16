@@ -14,7 +14,10 @@ import {
   LifeSpheres,
   lifeSpheres,
 } from 'src/configs/userConstants';
-import { Context, ContextDocument } from 'src/contexts/context.model/context.model';
+import {
+  Context,
+  ContextDocument,
+} from 'src/contexts/context.model/context.model';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +28,8 @@ export class AuthService {
   ) {}
   async getGoogleUser({ credential }: GoogleAuthDto) {
     try {
-      const googleUser: GoogleUserDto = await verifyGoogleCredentials(credential);
+      const googleUser: GoogleUserDto =
+        await verifyGoogleCredentials(credential);
       return googleUser;
     } catch {
       throw new HttpException(
@@ -92,9 +96,7 @@ export class AuthService {
       { userId: user._id, type: 'tag', value: 'it' },
     ];
 
-    const lifeSpheresContextSetup1 = await this.contextModel.insertMany(
-      lifeSpheresContextSetups,
-    );
+    await this.contextModel.insertMany(lifeSpheresContextSetups);
 
     // console.log(lifeSpheresContextSetup1);
 

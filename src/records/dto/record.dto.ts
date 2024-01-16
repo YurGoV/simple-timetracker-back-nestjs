@@ -131,3 +131,10 @@ export class CreateRecordDto {
   @ApiProperty({ example: ['ObjectId', 'ObjectId'] })
   tags: string[];
 }
+
+export class UpdateRecordDto {
+  @IsString()
+  recordId: string;
+
+  record: CreateRecordDto;
+}
