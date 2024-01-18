@@ -49,6 +49,7 @@ export class AuthController {
     return dbUser;
   }
 
+  // TODO: change to @User
   @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)

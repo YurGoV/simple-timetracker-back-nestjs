@@ -58,9 +58,9 @@ export class JwtAuthGuard implements CanActivate {
         HttpStatus.UNAUTHORIZED,
       );
     }
-    const role = userFromDb?.role;
+    const { role, _id: userId } = userFromDb;
 
-    request.user = { ...user, role: role };
+    request.user = { ...user, role, userId };
 
     return true; // Token is valid and not expired
   }

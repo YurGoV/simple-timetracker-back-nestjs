@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from 'src/configs/jwt.config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { Context, ContextSchema } from 'src/contexts/context.model/context.model';
 
 @Module({
   controllers: [AuthController],
@@ -17,6 +18,12 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       {
         name: User.name,
         schema: UserSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: Context.name,
+        schema: ContextSchema,
       },
     ]),
     ConfigModule,

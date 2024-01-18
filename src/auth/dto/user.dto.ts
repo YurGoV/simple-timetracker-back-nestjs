@@ -25,6 +25,9 @@ export class UserDto {
   @ApiProperty({ example: 'https://......', description: 'picture url' })
   picture: string;
 
+  @ApiProperty({ example: ['tag', 'enother_tag'] })
+  tags: string[];
+
   @IsJWT()
   @ApiProperty({ example: '.....', description: 'token' })
   token: string;

@@ -30,4 +30,11 @@ export class User {
   token: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const CreateUserSchema = () => {
+  const schema = SchemaFactory.createForClass(User);
+  schema.index({ tags: 1, email: 1 });
+
+  return schema;
+};
+
+export const UserSchema = CreateUserSchema();

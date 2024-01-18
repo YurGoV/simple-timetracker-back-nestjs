@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConfig } from './configs/mongo.config';
+import { RecordsModule } from './records/records.module';
+import { ContextsModule } from './contexts/contexts.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { getMongoConfig } from './configs/mongo.config';
     }),
     ConfigModule.forRoot(),
     AuthModule,
+    RecordsModule,
+    ContextsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
