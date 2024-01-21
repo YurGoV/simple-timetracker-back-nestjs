@@ -58,7 +58,7 @@ export class AuthService {
     };
     const user = await this.userModel.create(payload);
 
-    // TODO: replace to cycle
+    // TODO: move to configs
     const lifeSpheresContextSetups = [
       { userId: user._id, type: 'life', value: LifeSpheres.HEALTH },
       { userId: user._id, type: 'life', value: LifeSpheres.WORK },
@@ -86,6 +86,9 @@ export class AuthService {
       },
       //
       { userId: user._id, type: 'tag', value: 'coding' },
+      { userId: user._id, type: 'tag', value: 'walking' },
+      { userId: user._id, type: 'tag', value: 'meeting' },
+      { userId: user._id, type: 'tag', value: 'dance' },
       { userId: user._id, type: 'tag', value: 'learn' },
       { userId: user._id, type: 'tag', value: 'training' },
       { userId: user._id, type: 'tag', value: 'pet' },
@@ -94,6 +97,10 @@ export class AuthService {
       { userId: user._id, type: 'tag', value: 'physical' },
       { userId: user._id, type: 'tag', value: 'hobby' },
       { userId: user._id, type: 'tag', value: 'it' },
+      { userId: user._id, type: 'tag', value: 'js' },
+      { userId: user._id, type: 'tag', value: 'ts' },
+      { userId: user._id, type: 'tag', value: 'node' },
+      { userId: user._id, type: 'tag', value: 'vue' },
     ];
 
     await this.contextModel.insertMany(lifeSpheresContextSetups);

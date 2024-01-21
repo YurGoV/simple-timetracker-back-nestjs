@@ -11,7 +11,7 @@ export const getMongoConfig = async (
 };
 
 const getMongoString = (configService: ConfigService) =>
-  'mongodb+srv://' +
+  'mongodb://' +
   configService.get('MONGO_LOGIN') +
   ':' +
   configService.get('MONGO_PASSWORD') +
@@ -19,7 +19,20 @@ const getMongoString = (configService: ConfigService) =>
   configService.get('MONGO_HOST') +
   '/' +
   configService.get('MONGO_DB_NAME') +
-  '?retryWrites=true&w=majority';
+  '?authSource=' +
+  configService.get('MONGO_AUTH_DB');
+
+// NOTE: for atlas
+// 'mongodb+srv://' +
+// configService.get('MONGO_LOGIN') +
+// ':' +
+// configService.get('MONGO_PASSWORD') +
+// '@' +
+// configService.get('MONGO_HOST') +
+// '/' +
+// configService.get('MONGO_DB_NAME') +
+// '?retryWrites=true&w=majority';
+
 // +
 // ':' +
 // configService.get('MONGO_PORT') +
