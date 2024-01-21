@@ -12,20 +12,28 @@ export enum LifeSpheres {
 }
 
 export enum Importances {
-  IMPORTANT_URGENT = 'important_urgent',
-  IMPORTANT_NOTURGENT = 'important_noturgent',
-  UNIMPORTANT_URGENT = 'unimportant_urgent',
-  UNIMPORTANT_NOTURGENT = 'unimportant_noturgent',
+  IMPORTANT_URGENT = 'important urgent',
+  IMPORTANT_NOTURGENT = 'important noturgent',
+  UNIMPORTANT_URGENT = 'unimportant urgent',
+  UNIMPORTANT_NOTURGENT = 'unimportant noturgent',
 }
 // TODO: delete & check before & change to enum
 export const initialUserTags = [
   'coding',
   'learn',
+  'walking',
+  'meeting',
   'pet',
-  'fiction video',
+  'fiction',
+  'video',
   'job',
   'physical actitity',
   'hobby',
+  'js',
+  'ts',
+  'node',
+  'vue',
+  'dance',
 ];
 
 // TODO: delete & check before & change to enum
