@@ -4,6 +4,7 @@ import {
   Get,
   Injectable,
   Patch,
+  Post,
   Req,
   UseGuards,
   UsePipes,
@@ -13,6 +14,7 @@ import { ContextService } from './context.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UpdateContextDto } from './dto/update.context.dto';
+import { CreateContextDto } from './dto/create.context.dto';
 
 // import { request } from 'http';
 
@@ -43,6 +45,19 @@ export class ContextsController {
     // console.log(request.user);
     // const { userId } = request.user;
     const context = this.contextService.updateContext(payload);
+    return context;
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  @Post()
+  async createContext(@Body() body: CreateContextDto, @Req() request: any) {
+    // console.log(request.user);
+    // const { value } = payload;
+    const { userId } = request.user;
+    const payload = { ...body, userId };
+    const context = this.contextService.createContext(payload);
     return context;
   }
 }

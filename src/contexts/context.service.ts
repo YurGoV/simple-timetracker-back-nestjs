@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema as mongooseSchema } from 'mongoose';
 import { Context, ContextDocument } from './context.model/context.model';
 import { UpdateContextDto } from './dto/update.context.dto';
+import { ICreateContextPayload } from './dto/create.context.dto';
 
 // import { CreateRecordDto, RecordDto } from './dto/record.dto';
 
@@ -30,6 +31,11 @@ export class ContextService {
     return context;
   }
 
+  async createContext(payload: ICreateContextPayload) {
+    const contextData = { ...payload, type: 'tag' };
+    const context = await this.contextModel.create(contextData);
+    return context;
+  }
   // async createRecord(record: RecordDto, userId: string) {
   // async createContext(record: CreateContextDto, userId: string) {
   //   const payload = { ...record, userId };
