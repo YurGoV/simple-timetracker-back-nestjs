@@ -9,6 +9,7 @@ export enum LifeSpheres {
   SOCIAL = 'social',
   FAMILY = 'family',
   WORK = 'work',
+  UNDEFINED = 'other',
 }
 
 export enum Importances {
