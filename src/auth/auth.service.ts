@@ -64,6 +64,7 @@ export class AuthService {
       { userId: user._id, type: 'life', value: LifeSpheres.WORK },
       { userId: user._id, type: 'life', value: LifeSpheres.FAMILY },
       { userId: user._id, type: 'life', value: LifeSpheres.SOCIAL },
+      { userId: user._id, type: 'life', value: LifeSpheres.UNDEFINED },
       {
         userId: user._id,
         type: 'importance',
@@ -87,7 +88,6 @@ export class AuthService {
       //
       { userId: user._id, type: 'tag', value: 'coding' },
       { userId: user._id, type: 'tag', value: 'walking' },
-      { userId: user._id, type: 'tag', value: 'meeting' },
       { userId: user._id, type: 'tag', value: 'dance' },
       { userId: user._id, type: 'tag', value: 'learn' },
       { userId: user._id, type: 'tag', value: 'training' },
