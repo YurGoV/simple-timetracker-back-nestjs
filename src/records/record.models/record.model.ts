@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 // import { SimType } from '../sim-type.enum';
-import { HydratedDocument, Schema as mongooseSchema, Types } from 'mongoose';
+import { HydratedDocument, Schema as mongooseSchema } from 'mongoose';
 // import { Importances, LifeSpheres } from 'src/auth/auth.model/user.model';
 // import { Roles } from '../roles.enum';
 

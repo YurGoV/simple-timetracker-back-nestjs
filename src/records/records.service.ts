@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Record, RecordDocument } from './record.models/record.model';
 import { Model, Schema as mongooseSchema } from 'mongoose';
-import { CreateRecordDto, RecordDto, UpdateRecordDto } from './dto/record.dto';
+import { CreateRecordDto, UpdateRecordDto } from './dto/record.dto';
 
 @Injectable()
 export class RecordsService {
@@ -29,6 +29,14 @@ export class RecordsService {
     );
 
     return updatedRecord;
+  }
+
+  async deleteRecord(id: string) {
+    const deleteOperationResult = await this.recordModel.findByIdAndDelete(id);
+    if (!deleteOperationResult) {
+      throw new HttpException('id not found', HttpStatus.NOT_FOUND);
+    }
+    return deleteOperationResult;
   }
 
   async getAllRecords(userId: mongooseSchema.Types.ObjectId) {
