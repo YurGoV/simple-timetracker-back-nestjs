@@ -30,7 +30,9 @@ export class JwtAuthGuard implements CanActivate {
       decodedToken = await this.jwtService.verifyAsync(token);
     } catch (error: any) {
       if (error?.message === 'jwt expired') {
-        throw new HttpException('jwt expired', HttpStatus.NOT_ACCEPTABLE);
+        // TODO: fix logic
+        await this.userModel.findOneAndUpdate({ token }, { token: '' });
+        throw new HttpException('jwt expired d', HttpStatus.NOT_ACCEPTABLE);
       }
       return false; // Invalid token or error in token verification
     }

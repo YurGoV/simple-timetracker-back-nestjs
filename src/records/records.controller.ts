@@ -70,6 +70,7 @@ export class RecordsController {
   @Get()
   // const { userId } = request.user;
   async getAllRerords(@Req() request: any) {
+    console.log(request.user, 'RU')
     const { userId } = request!.user;
     const allRecords = await this.recordsService.getAllRecords(userId);
 
